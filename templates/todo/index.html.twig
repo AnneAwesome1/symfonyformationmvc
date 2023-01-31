@@ -1,11 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-  Hello TodoControllerPhpController!
+  Hello TodoController!
 {% endblock %}
 
 {% block body %}
-
   <div class="container text-center">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
@@ -14,7 +13,7 @@
         {# TITRE #}
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Tache</th>
+          <th scope="col">Tâche</th>
           <th scope="col">State</th>
           <th scope="col"></th>
         </tr>
@@ -30,6 +29,8 @@
 
             <td>
               <a href="{{ path('app.todo.detail', { id: todo.id }) }}" class="btn btn-info">Détail</a>
+
+              <a href="{{ path('app.todo.delete', { id: todo.id }) }}" class="btn btn-danger">Supprimer {{ todo.id }}</a>
             </td>
           </tr>
         {% endfor %}

@@ -20,7 +20,7 @@ class Todo
 
 
      
-     public function __construct($task, $description)
+     public function __construct($task, $description, $flush)
      {
           $this->completed = false;
           $this->task = $task;

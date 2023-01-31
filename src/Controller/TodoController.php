@@ -64,9 +64,26 @@ class TodoController extends AbstractController
     }
 
 
+    #[Route('/delete/{id}', name: 'app.todo.delete', methods: "GET")]
+    public function delete(Request $request, int $id)
+    {
+        $session = $request->getSession();
+
+        $todolist = $session->get('todolist');
+
+        foreach ($todolist as $key => $todo) {
+            if ($todo->id == $id) {
+                unset($todolist['$key']);
+            }
+        }
+
+        $session->set('todolist', $todolist);
+
+        return $this->redirect('/todo');
+    };
+
     private function init(): array
     {
-
         return  [
             new Todo("Apprendre Symfony", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, obcaecati!"),
             new Todo("Créer un Controller", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, obcaecati!"),
