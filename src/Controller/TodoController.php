@@ -80,7 +80,7 @@ class TodoController extends AbstractController
         $session->set('todolist', $todolist);
 
         return $this->redirect('/todo');
-    };
+    }
 
     private function init(): array
     {
