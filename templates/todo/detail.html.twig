@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+  Détail de Todo!
+{% endblock %}
+
+{% block body %}
+  {% for flash in app.flashes('warning') %}
+    <div class="alert alert-warning">{{ flash }}</div>
+  {% endfor %}
+
+
+ {% if(todo != null) %}
+
+  <div class="container text-center">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    <table class="table table-striped">
+      <thead>
+        {# TITRE #}
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tache</th>
+          <th scope="col">State</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">{{ todo.id }}</th>
+          <td>{{ todo.task }}</td>
+
+          <td>{{ todo.description }}</td>
+          <td>
+            <input type="checkbox" {{ todo.completed == false ? '' : 'checked' }} />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+{% endif %}
+
+    <div class="text-center">
+      <a class="btn btn-primary" href="{{ path('app.todo') }}">retour</a>
+    </div>
+  </div>
+
+{% endblock %}
