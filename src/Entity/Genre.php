@@ -71,4 +71,10 @@ class Genre
 
         return $this;
     }
+
+
+    public function __tostring(): string
+    {
+        return $this->type;
+    }
 }

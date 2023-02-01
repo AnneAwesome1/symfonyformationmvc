@@ -81,4 +81,9 @@ class Acteur
 
         return $this;
     }
+
+    public function __tostring(): string
+    {
+        return $this->prenom . " " . $this->nom;
+    }
 }
