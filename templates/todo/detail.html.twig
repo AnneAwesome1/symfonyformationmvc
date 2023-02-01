@@ -30,9 +30,13 @@
           <td>{{ todo.task }}</td>
 
           <td>{{ todo.description }}</td>
-          <td>
-            <input type="checkbox" {{ todo.completed == false ? '' : 'checked' }} />
-          </td>
+        
+             <td>
+
+             {# quand on clique la checkbox on appelle la method du controller #}
+              <input onchange="window.location.href='{{ path("app.todo.patch.completed", { 'id': todo.id }) }}'" type="checkbox" {{ todo.completed == false ? '' : 'checked' }} />
+            </td>
+
         </tr>
       </tbody>
     </table>
@@ -41,6 +45,7 @@
 
     <div class="text-center">
       <a class="btn btn-primary" href="{{ path('app.todo') }}">retour</a>
+   
     </div>
   </div>
 

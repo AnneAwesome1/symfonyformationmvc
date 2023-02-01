@@ -10,8 +10,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 #[Route('/todo')]
-
-
 class TodoController extends AbstractController
 {
 
@@ -81,7 +79,31 @@ class TodoController extends AbstractController
 
         return $this->redirect('/todo');
     }
+    // ____________ROUTR PERMETTANT LE CHANGEMET D'ETAT D'UNE TODO_______________________
+    #[Route('/patch/completed/{id}', name: 'app.todo.patch.completed', methods: "GET")]
+    public function patchCompleted(Request $request, int $id): Response
+    {
+        // on recupere la session en cours
+        $session = $request->getSession();
+        // on recupere todolist dans la session
+        $todolist = $session->get('todolist');
 
+        foreach ($todolist as $key => $todo) {
+            if ($todo->id == $id) {
+                $todo->completed = !$todo->completed;
+            }
+        }
+
+        $session->set('todolist', $todolist);
+
+        return $this->redirect('/todo'); 
+        // Maintenant dans Index.html.TWIG
+    }
+
+
+
+
+    // _______________________________________________________________
     private function init(): array
     {
         return  [
