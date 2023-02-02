@@ -34,8 +34,6 @@ class Film
     #[ORM\ManyToOne(inversedBy: 'film')]
     private ?Realisateur $realisateur = null;
 
-    #[ORM\ManyToOne(inversedBy: 'OneToMany')]
-    private ?Realisateur $realisateurfilm = null;
 
     #[ORM\ManyToMany(targetEntity: Acteur::class, mappedBy: 'film')]
     private Collection $acteurs;
@@ -126,17 +124,7 @@ class Film
         return $this;
     }
 
-    public function getRealisateurfilm(): ?Realisateur
-    {
-        return $this->realisateurfilm;
-    }
 
-    public function setRealisateurfilm(?Realisateur $realisateurfilm): self
-    {
-        $this->realisateurfilm = $realisateurfilm;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Acteur>

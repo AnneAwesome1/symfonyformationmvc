@@ -19,7 +19,7 @@ class FilmType extends AbstractType
             ->add('duree')
             ->add('image')
             ->add('realisateur')
-            ->add('realisateurfilm')
+
             ->add('acteurs')
             ->add('genre')
         ;

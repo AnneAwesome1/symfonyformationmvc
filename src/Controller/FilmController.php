@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Film;
 use App\Form\FilmType;
 use App\Repository\FilmRepository;
+use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,16 +27,23 @@ class FilmController extends AbstractController
     {
         $film = new Film();
         $form = $this->createForm(FilmType::class, $film);
+
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $filmRepository->save($film, true);
 
-            return $this->redirectToRoute('app_film_index', [], Response::HTTP_SEE_OTHER);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $filmRepository->save($film, true);
+                return $this->redirectToRoute('app_film_index', [], Response::HTTP_SEE_OTHER);
+            } catch (\Exception $e) {
+                // dd("echec");
+                $this->addFlash('warning', 'Formulaire pas valide !');
+            }
         }
 
         return $this->render('film/new.html.twig', [
-            'film' => $film,
+            // 'film' => $film,
             'form' => $form,
         ]);
     }
@@ -69,7 +77,7 @@ class FilmController extends AbstractController
     #[Route('/{id}', name: 'app_film_delete', methods: ['POST'])]
     public function delete(Request $request, Film $film, FilmRepository $filmRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$film->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $film->getId(), $request->request->get('_token'))) {
             $filmRepository->remove($film, true);
         }
 
